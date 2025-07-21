@@ -4,7 +4,7 @@
 /// </summary>
 public class CustomerService {
     public static void Run() {
-        // Example code to see what's in the customer service queue:
+        //Example code to see what's in the customer service queue:
         // var cs = new CustomerService(10);
         // Console.WriteLine(cs);
 
@@ -14,8 +14,13 @@ public class CustomerService {
         // Scenario: 
         // Expected Result: 
         Console.WriteLine("Test 1");
+        var cs = new CustomerService(2);
+        cs.AddNewCustomer();
+        cs.ServeCustomer();
+        Console.WriteLine(cs);
 
-        // Defect(s) Found: 
+
+        // Defect(s) Found: ServeCustomer function was accessing a value that didn't exist anymore
 
         Console.WriteLine("=================");
 
@@ -88,8 +93,8 @@ public class CustomerService {
     /// Dequeue the next customer and display the information.
     /// </summary>
     private void ServeCustomer() {
-        _queue.RemoveAt(0);
         var customer = _queue[0];
+        _queue.RemoveAt(0);
         Console.WriteLine(customer);
     }
 

@@ -11,9 +11,16 @@ public class PersonQueue
     /// Add a person to the queue
     /// </summary>
     /// <param name="person">The person to add</param>
+    ///
+
+
+    //The Enqueue function inserts at the beginning, making it behave like a stack
     public void Enqueue(Person person)
     {
-        _queue.Insert(0, person);
+        //That needs to be changed
+        // _queue.Insert(0, person);
+
+        _queue.Add(person);
     }
 
     public Person Dequeue()
