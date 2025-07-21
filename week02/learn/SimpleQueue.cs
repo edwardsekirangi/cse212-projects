@@ -1,4 +1,6 @@
-﻿public class SimpleQueue {
+﻿using System.Diagnostics;
+using System.Xml.XPath;
+public class SimpleQueue {
     public static void Run() {
         // Test Cases
 
@@ -6,11 +8,13 @@
         // Scenario: Enqueue one value and then Dequeue it.
         // Expected Result: It should display 100
         Console.WriteLine("Test 1");
-        var queue = new SimpleQueue();
+        var queue = new Queue<int>();
         queue.Enqueue(100);
+        
         var value = queue.Dequeue();
+        Trace.Assert(value == 100);
         Console.WriteLine(value);
-        // Defect(s) Found:
+        // Defect(s) Found: This had an unhandled exception error, it was trying to access or use an index value that did not exist
 
         Console.WriteLine("------------");
 
@@ -18,7 +22,7 @@
         // Scenario: Enqueue multiple values and then Dequeue all of them
         // Expected Result: It should display 200, then 300, then 400 in that order
         Console.WriteLine("Test 2");
-        queue = new SimpleQueue();
+        queue = new Queue<int>();
         queue.Enqueue(200);
         queue.Enqueue(300);
         queue.Enqueue(400);
@@ -28,20 +32,21 @@
         Console.WriteLine(value);
         value = queue.Dequeue();
         Console.WriteLine(value);
-        // Defect(s) Found: 
+        // Defect(s) Found: This works perfectly
 
         Console.WriteLine("------------");
 
         // Test 3
         // Scenario: Dequeue from an empty Queue
         // Expected Result: An exception should be raised
+        //SINCE I am using system.Collections.Generic (Queue<int>) it throws another error
         Console.WriteLine("Test 3");
-        queue = new SimpleQueue();
+        queue = new Queue<int>();
         try {
             queue.Dequeue();
             Console.WriteLine("Oops ... This shouldn't have worked.");
         }
-        catch (IndexOutOfRangeException) {
+        catch (InvalidOperationException) {
             Console.WriteLine("I got the exception as expected.");
         }
         // Defect(s) Found: 
