@@ -25,6 +25,9 @@ public class Translator
     public void AddWord(string fromWord, string toWord)
     {
         // ADD YOUR CODE HERE
+        //For our add word, we also want to be able to update the code
+
+        _words[fromWord] = toWord;
     }
 
     /// <summary>
@@ -35,6 +38,15 @@ public class Translator
     public string Translate(string fromWord)
     {
         // ADD YOUR CODE HERE
-        return "";
+        //We wanna first create a variable that will return the new keyword
+        //And Incase the word does not exist, we will return a couple of question marks
+        string newWord = "???";
+
+        if (_words.ContainsKey(fromWord))
+        {
+            //If the word exists in the dictionary, we will retrieve it and assign it to newWord
+            newWord = _words[fromWord];
+        }
+        return newWord;
     }
 }

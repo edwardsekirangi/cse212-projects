@@ -25,41 +25,76 @@ public class Maze
         _mazeMap = mazeMap;
     }
 
-    // TODO Problem 4 - ADD YOUR CODE HERE
-    /// <summary>
-    /// Check to see if you can move left.  If you can, then move.  If you
-    /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
     public void MoveLeft()
     {
-        // FILL IN CODE
+        // Check if current position exists
+        if (!_mazeMap.ContainsKey((_currX, _currY)))
+            throw new InvalidOperationException("Can't go that way!");
+
+        // Check if moving left is allowed from current position
+        if (!_mazeMap[(_currX, _currY)][0])
+            throw new InvalidOperationException("Can't go that way!");
+
+        // Check if target position (x-1, y) exists
+        if (!_mazeMap.ContainsKey((_currX - 1, _currY)))
+            throw new InvalidOperationException("Can't go that way!");
+
+        // Move left by updating x coordinate
+        _currX--;
     }
 
-    /// <summary>
-    /// Check to see if you can move right.  If you can, then move.  If you
-    /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
     public void MoveRight()
     {
-        // FILL IN CODE
+        // Check if current position exists
+        if (!_mazeMap.ContainsKey((_currX, _currY)))
+            throw new InvalidOperationException("Can't go that way!");
+
+        // Check if moving right is allowed from current position
+        if (!_mazeMap[(_currX, _currY)][1])
+            throw new InvalidOperationException("Can't go that way!");
+
+        // Check if target position (x+1, y) exists
+        if (!_mazeMap.ContainsKey((_currX + 1, _currY)))
+            throw new InvalidOperationException("Can't go that way!");
+
+        // Move right by updating x coordinate
+        _currX++;
     }
 
-    /// <summary>
-    /// Check to see if you can move up.  If you can, then move.  If you
-    /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
     public void MoveUp()
     {
-        // FILL IN CODE
+        // Check if current position exists
+        if (!_mazeMap.ContainsKey((_currX, _currY)))
+            throw new InvalidOperationException("Can't go that way!");
+
+        // Check if moving up is allowed from current position
+        if (!_mazeMap[(_currX, _currY)][2])
+            throw new InvalidOperationException("Can't go that way!");
+
+        // Check if target position (x, y+1) exists
+        if (!_mazeMap.ContainsKey((_currX, _currY + 1)))
+            throw new InvalidOperationException("Can't go that way!");
+
+        // Move up by updating y coordinate
+        _currY++;
     }
 
-    /// <summary>
-    /// Check to see if you can move down.  If you can, then move.  If you
-    /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
-    /// </summary>
     public void MoveDown()
     {
-        // FILL IN CODE
+        // Check if current position exists
+        if (!_mazeMap.ContainsKey((_currX, _currY)))
+            throw new InvalidOperationException("Can't go that way!");
+
+        // Check if moving down is allowed from current position
+        if (!_mazeMap[(_currX, _currY)][3])
+            throw new InvalidOperationException("Can't go that way!");
+
+        // Check if target position (x, y-1) exists
+        if (!_mazeMap.ContainsKey((_currX, _currY - 1)))
+            throw new InvalidOperationException("Can't go that way!");
+
+        // Move down by updating y coordinate
+        _currY--;
     }
 
     public string GetStatus()
