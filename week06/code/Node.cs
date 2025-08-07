@@ -12,6 +12,11 @@ public class Node
     public void Insert(int value)
     {
         // TODO Start Problem 1
+        //If value equals current node's data, return and not add it to the tree
+        if (value == Data)
+        {
+            return; // Value already exists in the tree, do not insert duplicates
+        }
 
         if (value < Data)
         {
@@ -34,12 +39,60 @@ public class Node
     public bool Contains(int value)
     {
         // TODO Start Problem 2
-        return false;
+        //For our first case, we will check to see if the current is the data and then return true
+        if (value == Data)
+        {
+            return true;
+        }
+
+        //If value is less, search the left subtree
+        if (value < Data)
+        {
+            //So, I was gonna use an if statement and found this simpler way of checking for
+            // the left subtree if it is null
+            return Left?.Contains(value) ?? false; // If Left is null, return false
+        }
+
+        //If the value is greater, search the right subtree
+        else
+        {
+            //So, I was gonna use an if statement and found this simpler way of checking for
+            // the right subtree if it is null
+            return Right?.Contains(value) ?? false; // If Right is null, return false
+
+        }
+        
     }
 
     public int GetHeight()
     {
-        // TODO Start Problem 4
-        return 0; // Replace this line with the correct return statement(s)
+        // TODO Start Problem 4\
+
+        //Initialize heights for the left and right subtrees
+        int leftHeight = 0;
+        int rightHeight = 0;
+
+        //Recursively get height of left subtree if it exists
+        if (Left != null)
+        {
+            leftHeight = Left.GetHeight();
+        }
+
+        //Recursively get the height of right subtree if it exists
+        if (Right != null)
+        {
+            rightHeight = Right.GetHeight();
+        }
+
+        //Return 1(for current node) plus the maximum of left and right heights
+        if (leftHeight > rightHeight)
+        {
+            return 1 + leftHeight;
+        }
+        else
+        {
+            return 1 + rightHeight;
+        }
+        // return 0; Replace this line with the correct return statement(s)
     }
 }
