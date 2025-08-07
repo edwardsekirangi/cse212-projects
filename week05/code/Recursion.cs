@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Transactions;
 
 public static class Recursion
 {
@@ -15,7 +16,15 @@ public static class Recursion
     public static int SumSquaresRecursive(int n)
     {
         // TODO Start Problem 1
-        return 0;
+        // Implementing the SumSquaresRecursive function using recursion
+        if (n <= 0)
+        {
+            return 0; // Base case: if n is less than or equal to 0, return 0
+            
+        }
+
+        //Recursive case
+        return n * n + SumSquaresRecursive(n - 1);
     }
 
     /// <summary>
@@ -37,10 +46,41 @@ public static class Recursion
     /// You can assume that the size specified is always valid (between 1 
     /// and the length of the letters list).
     /// </summary>
-    public static void PermutationsChoose(List<string> results, string letters, int size, string word = "")
+
+    //Will add a bool to check if a letter has been used or not (Aternative approach from the course work)
+    //And for that to happen, we will need to create a new function called PermutationsChosen to help us
+
+public static void PermutationsChosen(List<string> results, string letters, int size)
+{
+    bool[] used = new bool[letters.Length]; // Create a boolean array to track used letters
+    // Call the recursive function with an empty starting permutation
+    PermutationsChoose(results, letters, size, "", used);
+}
+
+public static void PermutationsChoose(List<string> results, string letters, int size, string currently, bool[] used)
+{
+    // Base case: if the current permutation reaches the desired size, add it to results
+    if (currently.Length == size)
     {
-        // TODO Start Problem 2
+        results.Add(currently);
+        return;
     }
+
+    // Recursive case: try each letter from the letters string
+    for (int i = 0; i < letters.Length; i++)
+    {
+        // Only use this letter if it hasn’t been used yet
+        if (!used[i])
+        {
+            // Mark the letter as used
+            used[i] = true;
+            // Recursively generate permutations by adding this letter
+            PermutationsChoose(results, letters, size, currently + letters[i], used);
+            // Backtrack: mark the letter as unused for other permutations
+            used[i] = false;
+        }
+    }
+}
 
     /// <summary>
     /// #############
@@ -84,24 +124,37 @@ public static class Recursion
     /// 'remember' has already been added as an input parameter to 
     /// the function for you to complete this task.
     /// </summary>
-    public static decimal CountWaysToClimb(int s, Dictionary<int, decimal>? remember = null)
+   public static decimal CountWaysToClimb(int s, Dictionary<int, decimal>? remember = null)
+{
+    // Initialize the memoization dictionary if null
+    if (remember == null)
     {
-        // Base Cases
-        if (s == 0)
-            return 0;
-        if (s == 1)
-            return 1;
-        if (s == 2)
-            return 2;
-        if (s == 3)
-            return 4;
-
-        // TODO Start Problem 3
-
-        // Solve using recursion
-        decimal ways = CountWaysToClimb(s - 1) + CountWaysToClimb(s - 2) + CountWaysToClimb(s - 3);
-        return ways;
+        remember = new Dictionary<int, decimal>();
     }
+
+    // Base cases
+    if (s < 0) return 0; // Invalid case: overshot the staircase
+    if (s == 0) return 1; // At the top, one way (do nothing)
+    if (s == 1) return 1; // One step: one way (1)
+    if (s == 2) return 2; // Two steps: (1+1), (2)
+    if (s == 3) return 4; // Three steps: (1+1+1), (1+2), (2+1), (3)
+
+    // Check if result is already memoized
+    if (remember.ContainsKey(s))
+    {
+        return remember[s];
+    }
+
+    // Recursive case: sum ways from 1, 2, or 3 steps below
+    decimal ways = CountWaysToClimb(s - 1, remember) + 
+                   CountWaysToClimb(s - 2, remember) + 
+                   CountWaysToClimb(s - 3, remember);
+
+    // Store the result in the memoization dictionary
+    remember[s] = ways;
+
+    return ways;
+}
 
     /// <summary>
     /// #############
@@ -116,10 +169,26 @@ public static class Recursion
     /// Using recursion, insert all possible binary strings for a given pattern into the results list.  You might find 
     /// some of the string functions like IndexOf and [..X] / [X..] to be useful in solving this problem.
     /// </summary>
-    public static void WildcardBinary(string pattern, List<string> results)
+   public static void WildcardBinary(string pattern, List<string> results)
+{
+    // Base case: if no wildcards, add the pattern to results
+    if (pattern.IndexOf('*') == -1)
     {
-        // TODO Start Problem 4
+        results.Add(pattern);
+        return;
     }
+
+    // Recursive case: find the first wildcard
+    int wildcardIndex = pattern.IndexOf('*');
+    
+    // Replace * with '0' and recurse
+    string withZero = pattern[..wildcardIndex] + "0" + pattern[(wildcardIndex + 1)..];
+    WildcardBinary(withZero, results);
+    
+    // Replace * with '1' and recurse
+    string withOne = pattern[..wildcardIndex] + "1" + pattern[(wildcardIndex + 1)..];
+    WildcardBinary(withOne, results);
+}
 
     /// <summary>
     /// Use recursion to insert all paths that start at (0,0) and end at the

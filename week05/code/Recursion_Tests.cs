@@ -23,11 +23,12 @@ public class SumSquaresRecursiveTests
 [TestClass]
 public class PermutationsChooseTests
 {
+    //For out test method, I had to change the call to PermutationsChosen since it is now the public method
     [TestMethod]
     public void PermutationsChoose_3()
     {
         var results = new List<string>();
-        Recursion.PermutationsChoose(results, "ABCD", 3);
+        Recursion.PermutationsChosen(results, "ABCD", 3);
 
         results.Sort();
         var expected = new List<string> {
@@ -63,7 +64,7 @@ public class PermutationsChooseTests
     public void PermutationsChoose_2()
     {
         var results = new List<string>();
-        Recursion.PermutationsChoose(results, "ABCD", 2);
+        Recursion.PermutationsChosen(results, "ABCD", 2);
 
         results.Sort();
         var expected = new List<string> {
@@ -87,7 +88,7 @@ public class PermutationsChooseTests
     public void PermutationsChoose_1()
     {
         var results = new List<string>();
-        Recursion.PermutationsChoose(results, "ABCD", 1);
+        Recursion.PermutationsChosen(results, "ABCD", 1);
 
         results.Sort();
         var expected = new List<string> {
